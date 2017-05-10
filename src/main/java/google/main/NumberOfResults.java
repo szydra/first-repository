@@ -1,12 +1,10 @@
 package google.main;
 
-import java.io.IOException;
-
 import google.model.Result;
 
 public class NumberOfResults {
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		if(args.length == 0)
 			System.out.println("Nie podano żadnego argumentu.");
 		else
