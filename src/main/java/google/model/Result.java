@@ -58,8 +58,8 @@ public class Result {
         			"' Google niczego nie znalazło.");
 		} else {
 			System.out.println("Dla zapytania '" + this.query +
-        			"' Google znalazło ok. " + this.numberOfResults.toString() +
-        			" wyników.");
+        			"' Google znalazło ok. " +
+					String.format("%,d", this.numberOfResults) + " wyników.");
 		}
 	}
 }
