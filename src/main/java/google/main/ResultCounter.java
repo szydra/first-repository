@@ -8,6 +8,7 @@ import google.model.Result;
 import google.model.ResultComparator;
 
 public class ResultCounter {
+	// This is the main class of the application, it should not be instantiated.
 	private ResultCounter() { }
 	
 	private static final Logger log = Logger.getLogger(ResultCounter.class);

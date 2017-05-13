@@ -38,7 +38,7 @@ public class Result {
 			page = Jsoup.connect("https://google.pl/search?q="
 					+ this.query.replace(' ', '+')).userAgent(USER_AGENT).get();
 			log.debug("Pobrano stronę dla zapytania '" + this.query + "'.");
-		} catch (IOException ioe) {
+		} catch(IOException ioe) {
 			log.error("Błąd pobierania strony dla zapytania '"
 					+ this.query + "'.", ioe);
 			this.numberOfResults = 0L;
