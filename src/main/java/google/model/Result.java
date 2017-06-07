@@ -18,6 +18,11 @@ public class Result {
 		this.query = query;
 	}
 	
+	public Result(String query, Long numberOfResults) {
+		this.query = query;
+		this.numberOfResults = numberOfResults;
+	}
+	
 	private static final String USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) "
 			+ "AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/"
 			+ "58.0.3029.81 Chrome/58.0.3029.81 Safari/537.36";
@@ -58,12 +63,12 @@ public class Result {
 	
 	public void printNumberOfResults() {		
 		if(this.numberOfResults.equals(0L)) {
-			log.info("Dla zapytania '" + this.query +
-					"' Google niczego nie znalazło.");
+			log.info("Dla zapytania '" + this.query
+					+ "' Google niczego nie znalazło.");
 		} else {
-			log.info("Dla zapytania '" + this.query +
-					"' Google znalazło ok. " +
-					String.format("%,d", this.numberOfResults) + " wyników.");
+			log.info("Dla zapytania '" + this.query
+					+ "' Google znalazło ok. "
+					+ String.format("%,d", this.numberOfResults) + " wyników.");
 		}
 	}
 }

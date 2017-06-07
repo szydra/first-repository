@@ -16,3 +16,6 @@ buildNumber.properties
 
 # Log file
 log4j.log
+
+# Database
+results.db
