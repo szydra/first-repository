@@ -1,6 +1,8 @@
 package google.model;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import static java.time.temporal.ChronoUnit.DAYS;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,9 +20,10 @@ public class Result {
 		this.query = query;
 	}
 	
-	public Result(String query, Long numberOfResults) {
+	public Result(String query, Long numberOfResults, String date) {
 		this.query = query;
 		this.numberOfResults = numberOfResults;
+		this.date = LocalDate.parse(date);
 	}
 	
 	private static final String USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) "
@@ -29,12 +32,21 @@ public class Result {
 	
 	private static final String REGEX_RESULTS = "Około(.*)wyników";
 	
+	private Boolean justAdded = false;
+	
 	private String query;
+	
+	private LocalDate date;
 	
 	private Long numberOfResults;
 	
 	public Long getNumberOfResults() {
-		return numberOfResults;
+		return this.numberOfResults;
+	}
+	
+	public void setDate() {
+		this.date = LocalDate.now();
+		this.justAdded = true;
 	}
 	
 	public void setNumberOfResults() {
@@ -59,6 +71,17 @@ public class Result {
 		} else {
 			this.numberOfResults = 0L;
 		}
+	}
+	
+	public void printDate() {
+		String stringQuery = "Zapytanie '" + this.query + "'";
+		if(justAdded)
+			log.info(stringQuery + " teraz dodano do bazy danych.");
+		else if(this.date.equals(LocalDate.now()))
+			log.info(stringQuery + " dziś dodano do bazy danych.");
+		else
+			log.info(stringQuery + " dodano do bazy danych "
+					+ DAYS.between(this.date, LocalDate.now()) + " dni temu.");
 	}
 	
 	public void printNumberOfResults() {		
