@@ -7,22 +7,22 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import google.model.Result;
 
 public class SQLite {
-	
-	private static final Logger log = Logger.getLogger(SQLite.class);
-	
+
+	private static final Logger log = LogManager.getLogger(SQLite.class);
+
 	public SQLite() {
 		this.connect();
-		this.createTable();
 	}
-	
+
 	public static final String DRIVER = "org.sqlite.JDBC";
-	
-	public static final String DB_URL = "jdbc:sqlite:results.db";
+
+	public static final String DB_URL = "jdbc:sqlite:sql/results.db";
 
 	private Connection connection;
 
@@ -44,24 +44,13 @@ public class SQLite {
 		} catch (ClassNotFoundException cnfe) {
 			log.error("Brak sterownika bazy danych.", cnfe);
 		}
-		
+
 		try {
 			this.connection = DriverManager.getConnection(DB_URL);
 			this.statement = connection.createStatement();
 			log.debug("Połączono z bazą danych.");
 		} catch (SQLException sqle) {
 			log.error("Błąd połączenia z bazą danych", sqle);
-		}
-	}
-
-	public void createTable() {
-		try {
-			statement.execute("CREATE TABLE IF NOT EXISTS RESULTS (GOOGLE_QUERY "
-					+ "VARCHAR(31) PRIMARY KEY NOT NULL, NUMBER_OF_RESULTS LONG, "
-					+ "DATE_OF_SEARCH DATE)");
-			log.debug("Utworzono tabelę lub już istnieje.");
-		} catch (SQLException sqle) {
-			log.error("Błąd tworzenia tabeli.", sqle);
 		}
 	}
 
@@ -76,19 +65,17 @@ public class SQLite {
 
 	public Result getResult(String query) {
 		Result result = null;
-		final String SQLQuery = "SELECT * FROM RESULTS "
-				+ "WHERE GOOGLE_QUERY = '" + query + "'";
+		final String sqlQuery = "SELECT * FROM RESULTS " + "WHERE GOOGLE_QUERY = '" + query + "'";
 		ResultSet resultSet = null;
 		try {
-			resultSet = statement.executeQuery(SQLQuery);
-			if(resultSet.next()) {
+			resultSet = statement.executeQuery(sqlQuery);
+			if (resultSet.next()) {
 				result = new Result(query, resultSet.getLong("NUMBER_OF_RESULTS"),
 						resultSet.getString("DATE_OF_SEARCH"));
-				log.debug("Zapytanie " + query + " znajduje się w bazie danych.");
+				log.debug("Zapytanie {} znajduje się w bazie danych.", query);
 			}
 		} catch (SQLException sqle) {
-			log.error("Błąd pobierania danych dla zapytania "
-					+ query + ".", sqle);
+			log.error("Błąd pobierania danych dla zapytania {}.", query, sqle);
 		} finally {
 			this.closeSet(resultSet);
 		}
@@ -96,28 +83,35 @@ public class SQLite {
 	}
 
 	public void insertResult(String query, Long numberOfResults) {
-		final String SQLQuery = "INSERT INTO RESULTS (GOOGLE_QUERY, "
-				+ "NUMBER_OF_RESULTS, DATE_OF_SEARCH) VALUES ('"
-				+ query + "', '" + numberOfResults + "', '"
-				+ LocalDate.now() + "')";
+		final String sqlQuery = "INSERT INTO RESULTS (GOOGLE_QUERY, " + "NUMBER_OF_RESULTS, DATE_OF_SEARCH) VALUES ('"
+				+ query + "', '" + numberOfResults + "', '" + LocalDate.now() + "')";
 		try {
-			statement.executeUpdate(SQLQuery);
-			log.debug("Zapytanie " + query + " dodano do bazy danych.");
+			statement.executeUpdate(sqlQuery);
+			log.debug("Zapytanie {} dodano do bazy danych.", query);
 		} catch (SQLException sqle) {
-			log.error("Podczas dodawania zapytania " + query
-					+ " do bazy danych wystąpił błąd.", sqle);
+			log.error("Podczas dodawania zapytania {} do bazy danych wystąpił błąd.", query, sqle);
+		}
+	}
+
+	public void removeResult(String query) {
+		final String sqlQuery = "DELETE FROM RESULTS WHERE GOOGLE_QUERY = '" + query + "'";
+		try {
+			statement.executeUpdate(sqlQuery);
+			log.info("Zapytanie {} usunięto z bazy danych.", query);
+		} catch (SQLException sqle) {
+			log.error("Podczas usuwania zapytania {} z bazy danych wystąpił błąd.", query, sqle);
 		}
 	}
 
 	public void showAll() {
-		final String SQLQuery = "SELECT * FROM RESULTS";
+		final String sqlQuery = "SELECT * FROM RESULTS";
 		ResultSet resultSet = null;
 		try {
-			resultSet = statement.executeQuery(SQLQuery);
+			resultSet = statement.executeQuery(sqlQuery);
 			String date;
 			String query;
 			Long numberOfResults;
-			while(resultSet.next()) {
+			while (resultSet.next()) {
 				query = resultSet.getString("GOOGLE_QUERY");
 				numberOfResults = resultSet.getLong("NUMBER_OF_RESULTS");
 				date = resultSet.getString("DATE_OF_SEARCH");

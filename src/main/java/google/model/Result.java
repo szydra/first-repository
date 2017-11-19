@@ -64,12 +64,10 @@ public class Result {
 			return;
 		}
 
-		String resultStats = page.select("div#resultStats").text();
-		Matcher matcher = Pattern.compile(REGEX_RESULTS).matcher(resultStats);
+		Matcher matcher = Pattern.compile(REGEX_RESULTS).matcher(page.select("div#resultStats").text());
 
 		if (matcher.find()) {
-			String number = matcher.group(1).replaceAll("\\D", "");
-			this.numberOfResults = Long.valueOf(number);
+			this.numberOfResults = Long.valueOf(matcher.group(1).replaceAll("\\D", ""));
 		} else {
 			this.numberOfResults = 0L;
 		}
