@@ -14,8 +14,9 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 
-# Log file
-log4j.log
+# Log files
+*.log
+*.log.gz
 
 # Database
-results.db
+*.db
