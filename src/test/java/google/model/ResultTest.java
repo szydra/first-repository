@@ -74,7 +74,7 @@ public class ResultTest {
 	public void testCommonQuery() {
 		result = new Result("bbc news");
 		result.setNumberOfResults();
-		assertTrue(result.getNumberOfResults().longValue() > 100 * 1000 * 1000L);
+		assertTrue(result.getNumberOfResults() > 100_000_000L);
 	}
 
 	@Test
@@ -86,7 +86,7 @@ public class ResultTest {
 
 	@Test
 	public void testTodayRequest() {
-		result = new Result("chomik", Long.valueOf(0L), LocalDate.now().toString());
+		result = new Result("chomik", 0L, LocalDate.now().toString());
 		result.printDate();
 		verify(mockAppender, times(1)).append(captorLogEvent.capture());
 		LogEvent loggingEvent = captorLogEvent.getAllValues().get(0);
@@ -116,7 +116,7 @@ public class ResultTest {
 
 	@Test
 	public void testZeroResultsPrinter() {
-		result = new Result("chomik", Long.valueOf(0L), null);
+		result = new Result("chomik", 0L, null);
 		result.printNumberOfResults();
 		verify(mockAppender, times(1)).append(captorLogEvent.capture());
 		LogEvent loggingEvent = captorLogEvent.getAllValues().get(0);
@@ -126,8 +126,8 @@ public class ResultTest {
 
 	@Test
 	public void testNonZeroResultsPrinter() {
-		long number = 10000L;
-		result = new Result("chomik", Long.valueOf(number), null);
+		long number = 10_000L;
+		result = new Result("chomik", number, null);
 		result.printNumberOfResults();
 		verify(mockAppender, times(1)).append(captorLogEvent.capture());
 		LogEvent loggingEvent = captorLogEvent.getAllValues().get(0);
