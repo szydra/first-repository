@@ -5,6 +5,9 @@ import java.util.Optional;
 
 import google.model.Result;
 
+/**
+ * DAO for {@link Result} objects.
+ */
 public interface ResultDao {
 
 	/**
@@ -25,7 +28,7 @@ public interface ResultDao {
 	 * 
 	 * @throws DaoException
 	 */
-	List<Result> getAllResults();
+	List<Result> findAll();
 
 	/**
 	 * This method returns a result stored in the database.
@@ -38,14 +41,14 @@ public interface ResultDao {
 	 * 
 	 * @throws DaoException
 	 */
-	Optional<Result> getResult(String query);
+	Optional<Result> find(String query);
 
 	/**
 	 * This method removes all data stored in the database.
 	 * 
 	 * @throws DaoException
 	 */
-	void deleteAllResults();
+	void deleteAll();
 
 	/**
 	 * This method removes the given result from the database.
@@ -55,7 +58,7 @@ public interface ResultDao {
 	 * 
 	 * @throws DaoException
 	 */
-	void deleteResult(Result result);
+	void delete(Result result);
 
 	/**
 	 * This method removes data corresponding to the given query from the database.
@@ -65,6 +68,6 @@ public interface ResultDao {
 	 * 
 	 * @throws DaoException
 	 */
-	void deleteResult(String query);
+	void delete(String query);
 
 }

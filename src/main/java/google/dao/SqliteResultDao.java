@@ -33,7 +33,7 @@ class SqliteResultDao implements ResultDao {
 	}
 
 	@Override
-	public List<Result> getAllResults() {
+	public List<Result> findAll() {
 		List<Result> results = new ArrayList<>();
 		try (Sqlite sqlite = new Sqlite();
 				Statement statement = sqlite.getStatement();
@@ -52,7 +52,7 @@ class SqliteResultDao implements ResultDao {
 	}
 
 	@Override
-	public Optional<Result> getResult(String query) {
+	public Optional<Result> find(String query) {
 		try (Sqlite sqlite = new Sqlite();
 				Statement statement = sqlite.getStatement();
 				ResultSet resultSet = statement.executeQuery(getSqlForSingleSelect(query))) {
@@ -68,7 +68,7 @@ class SqliteResultDao implements ResultDao {
 	}
 
 	@Override
-	public void deleteAllResults() {
+	public void deleteAll() {
 		try (Sqlite sqlite = new Sqlite()) {
 			sqlite.executeUpdate(getSqlForDeleteAll());
 		} catch (SQLException sqle) {
@@ -77,12 +77,12 @@ class SqliteResultDao implements ResultDao {
 	}
 
 	@Override
-	public void deleteResult(Result result) {
-		deleteResult(result.getQuery());
+	public void delete(Result result) {
+		delete(result.getQuery());
 	}
 
 	@Override
-	public void deleteResult(String query) {
+	public void delete(String query) {
 		try (Sqlite sqlite = new Sqlite()) {
 			sqlite.executeUpdate(getSqlForDelete(query));
 			log.debug("Zapytanie {} usunięto z bazy danych.", query);
