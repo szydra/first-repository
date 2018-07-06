@@ -1,6 +1,6 @@
 package google.dao;
 
-import static google.dao.SQLHelper.*;
+import static google.dao.SqlHelper.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

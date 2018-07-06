@@ -4,14 +4,14 @@ import java.time.LocalDate;
 
 import google.model.Result;
 
-class SQLHelper {
+class SqlHelper {
 
 	static final String TABLE_NAME = "RESULTS";
 	static final String COLUMN_QUERY = "GOOGLE_QUERY";
 	static final String COLUMN_NUMBER = "NUMBER_OF_RESULTS";
 	static final String COLUMN_DATE = "DATE_OF_SEARCH";
 
-	private SQLHelper() {
+	private SqlHelper() {
 		// Helper class which should not be instantiated.
 	}
 
