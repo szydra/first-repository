@@ -1,7 +1,5 @@
 package google.dao;
 
-import java.time.LocalDate;
-
 import google.model.Result;
 
 class SqlHelper {
@@ -21,9 +19,9 @@ class SqlHelper {
 				.append(" (").append(COLUMN_QUERY).append(", ")
 				.append(COLUMN_NUMBER).append(", ")
 				.append(COLUMN_DATE).append(") ")
-				.append("VALUES ('").append(result.getQuery()).append("', '")
-				.append(result.getNumberOfResults()).append("', '")
-				.append(LocalDate.now()).append("')");
+				.append("VALUES ('").append(result.getQuery()).append("', ")
+				.append(result.getNumberOfResults()).append(", '")
+				.append(result.getDate()).append("')");
 		return sql.toString();
 	}
 
