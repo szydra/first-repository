@@ -17,10 +17,23 @@ public class ResultCounter implements CommandLineRunner {
 	@Autowired
 	private ResultProcessor resultProcessor;
 
-	/*
-	 * If you want to see the database, type '--show-db'. If you want to get sorted
-	 * or remove answers, type '--sort' or '--remove', respectively, as the first
-	 * argument.
+	/**
+	 * The main method of the application.
+	 * 
+	 * The first argument can be one of the following flags:
+	 * <ul>
+	 * <li><b>--clear-db</b> if you want to remove all data stored in the
+	 * database;</li>
+	 * <li><b>--remove</b> if you want to remove specific data from the
+	 * database;</li>
+	 * <li><b>--show-db</b> if you want to see the whole database.</li>
+	 * </ul>
+	 * By default, if no flag is passed, the app prints the number of results found
+	 * by Google for the given arguments. In such a case the answer is sorted
+	 * descending with respect to popularity.
+	 * 
+	 * @param args
+	 *            Arguments to be processed, the first one can a flag.
 	 */
 	public static void main(String... args) {
 		SpringApplication.run(ResultCounter.class, args);
