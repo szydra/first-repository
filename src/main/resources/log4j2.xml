@@ -28,11 +28,15 @@
     </RollingFile>
   </Appenders>
   <Loggers>
+    <Logger name="google.dao" level="DEBUG" additivity="false">
+      <AppenderRef ref="UserConsoleAppender" />
+      <AppenderRef ref="FileAppender" />
+    </Logger>
     <Logger name="google.main" level="DEBUG" additivity="false">
       <AppenderRef ref="UserConsoleAppender" />
       <AppenderRef ref="FileAppender" />
     </Logger>
-    <Logger name="google.model" level="DEBUG" additivity="false">
+    <Logger name="google.finder" level="DEBUG" additivity="false">
       <AppenderRef ref="UserConsoleAppender" />
       <AppenderRef ref="FileAppender" />
     </Logger>
