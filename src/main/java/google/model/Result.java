@@ -1,10 +1,12 @@
 package google.model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Result {
 
 	public Result() {
+		this("");
 	}
 
 	public Result(String query) {
@@ -12,12 +14,12 @@ public class Result {
 	}
 
 	public Result(String query, Long numberOfResults, String date) {
-		this.query = query;
+		this(query);
 		this.numberOfResults = numberOfResults;
 		this.date = date == null ? LocalDate.now() : LocalDate.parse(date);
 	}
 
-	private String query;
+	private final String query;
 
 	private LocalDate date;
 
@@ -35,10 +37,6 @@ public class Result {
 		return numberOfResults;
 	}
 
-	public void setQuery(String query) {
-		this.query = query;
-	}
-
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}
@@ -50,6 +48,22 @@ public class Result {
 	@Override
 	public String toString() {
 		return query + ": " + numberOfResults;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == this) {
+			return true;
+		} else if (!(o instanceof Result)) {
+			return false;
+		}
+		Result oResult = (Result) o;
+		return Objects.equals(query, oResult.query);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(query);
 	}
 
 }
