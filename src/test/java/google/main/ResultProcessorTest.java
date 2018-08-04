@@ -1,14 +1,10 @@
 package google.main;
 
-import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-import java.io.File;
 import java.util.Arrays;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -22,20 +18,6 @@ import google.model.Result;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ResultProcessorTest {
-
-	private static final String LOG_FILENAME = "log4j2-test.log";
-
-	@BeforeClass
-	public static void setupLogger() {
-		System.setProperty("logFilename", LOG_FILENAME);
-	}
-
-	@AfterClass
-	public static void deleteLogFile() {
-		if (!new File(LOG_FILENAME).delete()) {
-			fail("Cannot delete file " + LOG_FILENAME);
-		}
-	}
 
 	@Mock
 	private DbService dbServiceMock;
